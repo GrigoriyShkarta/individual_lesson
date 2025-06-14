@@ -39,10 +39,10 @@ export const metadata: Metadata = {
 		description:
 			'Професійні уроки сучасного, рок та екстремального вокалу з індивідуальним підходом. Розкрий свій голосовий потенціал!',
 		type: 'website',
-		url: 'https://your-domain.com/',
+		url: 'https://individual-lesson.vercel.app/',
 		images: [
 			{
-				url: 'https://your-domain.com/assets/ys_vocalcoach.png',
+				url: 'https://individual-lesson.vercel.app/assets/ys_vocalcoach.png',
 				width: 1200,
 				height: 630,
 				alt: 'Викладач вокалу Яна Сабада',
@@ -54,14 +54,14 @@ export const metadata: Metadata = {
 		title: 'Індивідуальні уроки сучасного вокалу | Професійний викладач',
 		description:
 			'Професійні уроки сучасного, рок та екстремального вокалу з індивідуальним підходом. Розкрий свій голосовий потенціал!',
-		images: ['https://your-domain.com/assets/ys_vocalcoach.png'],
+		images: ['https://individual-lesson.vercel.app/assets/ys_vocalcoach.png'],
 	},
 	icons: {
 		icon: '/favicon.ico',
 		apple: '/apple-touch-icon.png',
 		shortcut: '/favicon-32x32.png',
 	},
-	metadataBase: new URL('https://your-domain.com/'),
+	metadataBase: new URL('https://individual-lesson.vercel.app/'),
 }
 
 export default function RootLayout({
