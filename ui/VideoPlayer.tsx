@@ -111,7 +111,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
 				src={src}
 				className={`w-full ${
 					small ? 'rounded-lg' : 'rounded-xl'
-				} bg-black max-h-[252px]`}
+				} bg-black max-h-[252px] max-sm:max-h-[166px]`}
 				playsInline
 				autoPlay={autoPlay}
 				muted={muted}
@@ -126,9 +126,9 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
 			{/* Кастомные элементы управления */}
 			{controls && (
 				<motion.div
-					className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 ${
-						small ? 'p-2' : 'p-4'
-					} z-10`} // Добавлен z-index для приоритета над оверлеем
+					className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent z-20 ${
+						small ? 'p-2 min-h-12' : 'p-4 min-h-16'
+					} flex flex-col justify-end`}
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					transition={{ duration: 0.3 }}
@@ -226,13 +226,13 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
 			{/* Overlay для индикации воспроизведения */}
 			{!isPlaying && !autoPlay && (
 				<div
-					className='absolute inset-x-0 top-0 bottom-16 flex items-center justify-center cursor-pointer' // bottom-16 оставляет место для панели управления
-					onClick={togglePlay} // Добавляем обработчик клика для воспроизведения
+					className='absolute inset-0 flex items-center justify-center pointer-events-none z-10' // pointer-events-none чтобы не блокировать controls
 				>
 					<button
-						className='p-4 bg-black/50 rounded-full hover:bg-black/70 transition-colors cursor-pointer'
+						className='p-4 bg-black/50 rounded-full hover:bg-black/70 transition-colors cursor-pointer pointer-events-auto'
 						aria-label='Play video'
 						type='button'
+						onClick={togglePlay}
 					>
 						<svg
 							className='w-10 h-10 text-white'
