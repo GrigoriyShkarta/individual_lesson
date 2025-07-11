@@ -30,15 +30,15 @@ const Footer = () => {
 				},
 			],
 		},
-		{
-			title: 'Документи',
-			links: [
-				{
-					name: 'Умови навчання',
-					href: 'https://drive.google.com/file/d/1OEaxTYuGeu_qAlHUU5Ox0y8tautoE7Sw/view?usp=drivesdk',
-				},
-			],
-		},
+		// {
+		// 	title: 'Документи',
+		// 	links: [
+		// 		{
+		// 			name: 'Умови навчання',
+		// 			href: 'https://drive.google.com/file/d/1OEaxTYuGeu_qAlHUU5Ox0y8tautoE7Sw/view?usp=drivesdk',
+		// 		},
+		// 	],
+		// },
 	]
 
 	return (

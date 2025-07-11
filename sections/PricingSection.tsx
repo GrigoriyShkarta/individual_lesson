@@ -10,23 +10,23 @@ const PricingSection = () => {
 			id: 2,
 			title: '4 уроки',
 			description: '1 раз на тиждень',
-			price: '4000 грн',
+			price: '4500 грн',
 			popular: true,
 			variant: 'outline' as const,
 		},
-		{
-			id: 3,
-			title: '6 уроків',
-			description: 'Чергуємо 1 та 2 рази на тиждень',
-			price: '6000 грн',
-			popular: false,
-			variant: 'primary' as const,
-		},
+		// {
+		// 	id: 3,
+		// 	title: '6 уроків',
+		// 	description: 'Чергуємо 1 та 2 рази на тиждень',
+		// 	price: '6000 грн',
+		// 	popular: false,
+		// 	variant: 'primary' as const,
+		// },
 		{
 			id: 4,
 			title: '8 уроків',
 			description: '2 рази на тиждень',
-			price: '8000 грн',
+			price: '9000 грн',
 			popular: true,
 			variant: 'outline' as const,
 		},
@@ -34,7 +34,7 @@ const PricingSection = () => {
 			id: 5,
 			title: '12 уроків',
 			description: 'Інтенсивний курс (3 рази на тиждень)',
-			price: '12000 грн',
+			price: '13500 грн',
 			popular: false,
 			variant: 'outline' as const,
 		},
@@ -82,7 +82,7 @@ const PricingSection = () => {
 					<h3 className='text-2xl font-bold mb-4 text-blue-600 text-center'>
 						Абонименти
 					</h3>
-					<div className='grid md:grid-cols-2 gap-6 mb-6'>
+					<div className='grid gap-6 mb-6'>
 						{pricingPlans.map(plan => (
 							<div
 								key={plan.id}

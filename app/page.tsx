@@ -1,6 +1,6 @@
 import AboutSection from '@/sections/AboutSection'
 import ApproachSection from '@/sections/ApproachSection'
-import ConditionsSection from '@/sections/ConditionsSection'
+// import ConditionsSection from '@/sections/ConditionsSection'
 import CtaSection from '@/sections/CtaSection'
 import FaqSection from '@/sections/FaqSection'
 import Footer from '@/sections/Footer'
@@ -38,7 +38,7 @@ export default function Home() {
 				<ResultsSection />
 				<ReviewsSection />
 				<FaqSection />
-				<ConditionsSection />
+				{/* <ConditionsSection /> */}
 				<CtaSection />
 			</main>
 
