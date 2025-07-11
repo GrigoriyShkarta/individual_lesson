@@ -60,7 +60,7 @@ const PricingSection = () => {
 							</p>
 							<div className='flex flex-col sm:flex-row justify-between items-center'>
 								<span className='text-3xl font-bold text-gray-900 mb-4 sm:mb-0'>
-									700 грн
+									800 грн
 								</span>
 								<Button
 									variant='outline'
@@ -139,7 +139,7 @@ const PricingSection = () => {
 							</p>
 							<div className='flex flex-col sm:flex-row justify-between items-center'>
 								<span className='text-3xl font-bold text-gray-900 mb-4 sm:mb-0'>
-									1500 грн
+									1600 грн
 								</span>
 								<Button
 									variant='outline'
