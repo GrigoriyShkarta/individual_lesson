@@ -10,7 +10,7 @@ const PricingSection = () => {
 			id: 2,
 			title: '4 уроки',
 			description: '1 раз на тиждень',
-			price: '4500 грн',
+			price: '5000 грн',
 			popular: true,
 			variant: 'outline' as const,
 		},
@@ -26,7 +26,7 @@ const PricingSection = () => {
 			id: 4,
 			title: '8 уроків',
 			description: '2 рази на тиждень',
-			price: '9000 грн',
+			price: '10000 грн',
 			popular: true,
 			variant: 'outline' as const,
 		},
@@ -34,7 +34,7 @@ const PricingSection = () => {
 			id: 5,
 			title: '12 уроків',
 			description: 'Інтенсивний курс (3 рази на тиждень)',
-			price: '13500 грн',
+			price: '15000 грн',
 			popular: false,
 			variant: 'outline' as const,
 		},
@@ -60,7 +60,7 @@ const PricingSection = () => {
 							</p>
 							<div className='flex flex-col sm:flex-row justify-between items-center'>
 								<span className='text-3xl font-bold text-gray-900 mb-4 sm:mb-0'>
-									800 грн
+									1000 грн
 								</span>
 								<Button
 									variant='outline'
@@ -139,7 +139,7 @@ const PricingSection = () => {
 							</p>
 							<div className='flex flex-col sm:flex-row justify-between items-center'>
 								<span className='text-3xl font-bold text-gray-900 mb-4 sm:mb-0'>
-									1600 грн
+									2000 грн
 								</span>
 								<Button
 									variant='outline'
