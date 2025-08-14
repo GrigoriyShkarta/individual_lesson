@@ -232,8 +232,9 @@ const PricingSection = () => {
       {/*</span>*/}
               </div>
               
-              <div className='flex gap-2'>
-                {/* Колонка — Очікування індивідуальних */}
+              <div className='flex flex-col md:flex-row gap-2'>
+              
+              {/* Колонка — Очікування індивідуальних */}
                 <div className='flex flex-col justify-between bg-white/80 backdrop-blur-sm rounded-xl border border-gray-200 p-5 sm:p-6 shadow-sm hover:shadow-md transition-shadow'>
                   <div className='flex items-start gap-3'>
                     <div className='shrink-0 mt-1 text-blue-600'>
