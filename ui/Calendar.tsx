@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import {useEffect, useState} from 'react'
 import Button from '@/ui/Button'
 
 const CalendarSection = () => {
@@ -14,6 +14,7 @@ const CalendarSection = () => {
 
 	// Массив заблокированных дат (в формате 'YYYY-MM-DD')
 	const blockedDates = ['2025-06-27']
+  const blockAllDays = true
 
 	useEffect(() => {
 		const fetchEvents = async () => {
@@ -163,40 +164,44 @@ const CalendarSection = () => {
 	}
 
 	// Проверка доступности даты
-	const isDateAvailable = (day: number) => {
-		const date = new Date(currentYear, currentMonth, day)
-		const year = date.getFullYear()
-		const month = String(date.getMonth() + 1).padStart(2, '0')
-		const dayFormatted = String(date.getDate()).padStart(2, '0')
-		const dateString = `${year}-${month}-${dayFormatted}`
-
-		// Блокируем указанные даты
-		if (blockedDates.includes(dateString)) {
-			return false
-		}
-
-		// Блокируем четверги (4), субботы (6) и воскресенья (0)
-		const dayOfWeek = date.getDay()
-		if (dayOfWeek === 0 || dayOfWeek === 4 || dayOfWeek === 6) {
-			return false
-		}
-
-		// Получаем слоты для конкретного дня
-		const daySlots = availableSlots[dateString] || []
-
-		// Получаем все возможные слоты с 12:00 до 20:00
-		const allTimes = generateAllSlots(date, date, '12:00', '20:00', 60).map(
-			s => s.time
-		)
-
-		// Считаем количество занятых слотов
-		const busySlotsCount = allTimes.length - daySlots.length
-
-		// Блокируем день, если 6 или более слотов заняты
-		return busySlotsCount < 6
-	}
-
-	// Фильтрация слотов без окон
+  const isDateAvailable = (day: number) => {
+    // Если включена полная блокировка — блокируем все дни
+    if (blockAllDays) {
+      return false
+    }
+    
+    const date = new Date(currentYear, currentMonth, day)
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const dayFormatted = String(date.getDate()).padStart(2, '0')
+    const dateString = `${year}-${month}-${dayFormatted}`
+    
+    // Блокируем указанные даты
+    if (blockedDates.includes(dateString)) {
+      return false
+    }
+    
+    // Блокируем четверги (4), субботы (6) и воскресенья (0)
+    const dayOfWeek = date.getDay()
+    if (dayOfWeek === 0 || dayOfWeek === 4 || dayOfWeek === 6) {
+      return false
+    }
+    
+    // Получаем слоты для конкретного дня
+    const daySlots = availableSlots[dateString] || []
+    
+    // Получаем все возможные слоты с 12:00 до 20:00
+    const allTimes = generateAllSlots(date, date, '12:00', '20:00', 60).map(s => s.time)
+    
+    // Считаем количество занятых слотов
+    const busySlotsCount = allTimes.length - daySlots.length
+    
+    // Блокируем день, если 6 или более слотов заняты
+    return busySlotsCount < 6
+  }
+  
+  
+  // Фильтрация слотов без окон
 	function getContiguousSlots(slots: string[], allTimes: string[]): string[] {
 		if (slots.length === 0) return []
 		const busyTimes = allTimes.filter(t => !slots.includes(t))
