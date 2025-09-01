@@ -266,73 +266,73 @@ const PricingSection = () => {
                           }
                         }}
                       >
-              <span className='inline-flex items-center gap-2'>
-                Написати
-                <svg
-                  className='w-4 h-4 transition-transform group-hover:translate-x-0.5'
-                  viewBox='0 0 24 24'
-                  fill='none'
-                >
-                  <path d='M5 12h14M13 5l7 7-7 7' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'/>
-                </svg>
-              </span>
+                        <span className='inline-flex items-center gap-2'>
+                          Написати
+                          <svg
+                            className='w-4 h-4 transition-transform group-hover:translate-x-0.5'
+                            viewBox='0 0 24 24'
+                            fill='none'
+                          >
+                            <path d='M5 12h14M13 5l7 7-7 7' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'/>
+                          </svg>
+                        </span>
                       </Button>
                     </a>
                   </div>
                 </div>
                 
                 {/* Вертикальний поділ на md */}
-                <div className='hidden md:block h-full w-px mx-auto bg-gradient-to-b from-transparent via-gray-200 to-transparent' aria-hidden='true' />
+                {/*<div className='hidden md:block h-full w-px mx-auto bg-gradient-to-b from-transparent via-gray-200 to-transparent' aria-hidden='true' />*/}
                 
                 {/* Колонка — Мінігрупа */}
-                <div className='flex flex-col justify-between bg-white/80 backdrop-blur-sm rounded-xl border border-gray-200 p-5 sm:p-6 shadow-sm hover:shadow-md transition-shadow'>
-                  <div className='flex items-start gap-3'>
-                    <div className='shrink-0 mt-1 text-indigo-600'>
-                      <svg width='24' height='24' viewBox='0 0 24 24' fill='none'>
-                        <path d='M8 17a4 4 0 118 0v1H8v-1Z' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'/>
-                        <circle cx='12' cy='8' r='3' stroke='currentColor' strokeWidth='2'/>
-                      </svg>
-                    </div>
-                    <div>
-                      <div className='flex items-center gap-2'>
-                        <h4 className='text-lg font-bold text-gray-900'>
-                          Мінігрупа: екстремальні техніки з нуля
-                        </h4>
-                        
-                      </div>
-                      <p className='mt-2 text-gray-700'>
-                        А поки триває набір у мінігрупу на курс з екстремальних технік вокалу з нуля. Почніть навчання вже зараз!                      </p>
-                    </div>
-                  </div>
+                {/*<div className='flex flex-col justify-between bg-white/80 backdrop-blur-sm rounded-xl border border-gray-200 p-5 sm:p-6 shadow-sm hover:shadow-md transition-shadow'>*/}
+                {/*  <div className='flex items-start gap-3'>*/}
+                {/*    <div className='shrink-0 mt-1 text-indigo-600'>*/}
+                {/*      <svg width='24' height='24' viewBox='0 0 24 24' fill='none'>*/}
+                {/*        <path d='M8 17a4 4 0 118 0v1H8v-1Z' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'/>*/}
+                {/*        <circle cx='12' cy='8' r='3' stroke='currentColor' strokeWidth='2'/>*/}
+                {/*      </svg>*/}
+                {/*    </div>*/}
+                {/*    <div>*/}
+                {/*      <div className='flex items-center gap-2'>*/}
+                {/*        <h4 className='text-lg font-bold text-gray-900'>*/}
+                {/*          Мінігрупа: екстремальні техніки з нуля*/}
+                {/*        </h4>*/}
+                {/*        */}
+                {/*      </div>*/}
+                {/*      <p className='mt-2 text-gray-700'>*/}
+                {/*        А поки триває набір у мінігрупу на курс з екстремальних технік вокалу з нуля. Почніть навчання вже зараз!                      </p>*/}
+                {/*    </div>*/}
+                {/*  </div>*/}
                   
-                  <div className='mt-4 flex justify-center'>
-                    <a href='https://extreme-group-sable.vercel.app/' className='w-full sm:w-auto'>
-                      <Button
-                        variant='outline'
-                        as='button'
-                        size='sm'
-                        className='w-full sm:w-auto group'
-                        onClick={() => {
-                          const pricingSection = document.getElementById('pricing')
-                          if (pricingSection) {
-                            pricingSection.scrollIntoView({ behavior: 'smooth' })
-                          }
-                        }}
-                      >
-              <span className='inline-flex items-center gap-2'>
-                На курс
-                <svg
-                  className='w-4 h-4 transition-transform group-hover:translate-x-0.5'
-                  viewBox='0 0 24 24'
-                  fill='none'
-                >
-                  <path d='M5 12h14M13 5l7 7-7 7' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'/>
-                </svg>
-              </span>
-                      </Button>
-                    </a>
-                  </div>
-                </div>
+                  {/*<div className='mt-4 flex justify-center'>*/}
+                  {/*  <a href='https://extreme-group-sable.vercel.app/' className='w-full sm:w-auto'>*/}
+                  {/*    <Button*/}
+                  {/*      variant='outline'*/}
+                  {/*      as='button'*/}
+                  {/*      size='sm'*/}
+                  {/*      className='w-full sm:w-auto group'*/}
+                  {/*      onClick={() => {*/}
+                  {/*        const pricingSection = document.getElementById('pricing')*/}
+                  {/*        if (pricingSection) {*/}
+                  {/*          pricingSection.scrollIntoView({ behavior: 'smooth' })*/}
+                  {/*        }*/}
+                  {/*      }}*/}
+                  {/*    >*/}
+                  {/*      <span className='inline-flex items-center gap-2'>*/}
+                  {/*        На курс*/}
+                  {/*        <svg*/}
+                  {/*          className='w-4 h-4 transition-transform group-hover:translate-x-0.5'*/}
+                  {/*          viewBox='0 0 24 24'*/}
+                  {/*          fill='none'*/}
+                  {/*        >*/}
+                  {/*          <path d='M5 12h14M13 5l7 7-7 7' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'/>*/}
+                  {/*        </svg>*/}
+                  {/*      </span>*/}
+                  {/*    </Button>*/}
+                  {/*  </a>*/}
+                  {/*</div>*/}
+                {/*</div>*/}
               </div>
               
             </div>
