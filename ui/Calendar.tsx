@@ -114,6 +114,7 @@ const CalendarSection = () => {
 				if (dayOfWeek === 4) { // Четверг
 					slots.push({ date: dateStr, time: '10:00' })
 					slots.push({ date: dateStr, time: '14:00' })
+          slots.push({ date: dateStr, time: '17:00' })
 				}
 			} else {
 				// С октября 2025 — оба набора слотов
