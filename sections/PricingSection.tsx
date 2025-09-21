@@ -1,6 +1,7 @@
 'use client'
 
 import Button from '@/ui/Button'
+import Calendar from "@/ui/Calendar";
 
 const PricingSection = () => {
 	// Выносим тарифы в отдельный массив для удобства
@@ -158,127 +159,80 @@ const PricingSection = () => {
 					</div>
 
 					{/* Календарь */}
-					{/*<div className='bg-white rounded-xl shadow-lg overflow-hidden p-6'>*/}
-					{/*	<h3 className='text-2xl font-bold mb-6 text-center text-gray-900'>*/}
-					{/*		Доступні дати для запису*/}
-					{/*	</h3>*/}
-					{/*	<div className='flex justify-center'>*/}
-					{/*		<Calendar />*/}
-					{/*	</div>*/}
-					{/*</div>*/}
-          
-          {/*<div id={'buy'} className='bg-white rounded-xl shadow-lg overflow-hidden p-6'>*/}
-          {/*  <p className='text-center font-semibold'>Наразі місць на постійні індивідуальні уроки немає. Ви можете записатися у лист очікування – я зв’яжусь з вами, як тільки з’явиться вільний час.</p>*/}
-          {/*  */}
-          {/*  <div className='flex justify-center mt-4'>*/}
-          {/*    <a href='https://t.me/yana_vocalcoach'>*/}
-          {/*    <Button*/}
-          {/*      variant='primary'*/}
-          {/*      as='button'*/}
-          {/*      size='sm'*/}
-          {/*      onClick={() => {*/}
-          {/*        const pricingSection = document.getElementById('pricing')*/}
-          {/*        if (pricingSection) {*/}
-          {/*          pricingSection.scrollIntoView({*/}
-          {/*            behavior: 'smooth',*/}
-          {/*          })*/}
-          {/*        }*/}
-          {/*      }}*/}
-          {/*    >*/}
-          {/*      Записатися*/}
-          {/*    </Button>*/}
-          {/*    </a>*/}
-          {/*  </div>*/}
-          {/*  */}
-          {/*  <p className='text-center font-semibold mt-4'>А поки триває набір у мінігрупу на курс з екстремальних технік вокалу з нуля. Почніть навчання вже зараз!</p>*/}
-          {/*  */}
-          {/*  <div className='flex justify-center mt-4'>*/}
-          {/*    <a href='https://extreme-group-sable.vercel.app/'>*/}
-          {/*      <Button*/}
-          {/*        variant='primary'*/}
-          {/*        as='button'*/}
-          {/*        size='sm'*/}
-          {/*        onClick={() => {*/}
-          {/*          const pricingSection = document.getElementById('pricing')*/}
-          {/*          if (pricingSection) {*/}
-          {/*            pricingSection.scrollIntoView({*/}
-          {/*              behavior: 'smooth',*/}
-          {/*            })*/}
-          {/*          }*/}
-          {/*        }}*/}
-          {/*      >*/}
-          {/*        На курс*/}
-          {/*      </Button>*/}
-          {/*    </a>*/}
-          {/*  </div>*/}
-          {/*  */}
-          {/*</div>*/}
+					<div className='bg-white rounded-xl shadow-lg overflow-hidden p-6'>
+						<h3 className='text-2xl font-bold mb-6 text-center text-gray-900'>
+							Доступні дати для запису
+						</h3>
+						<div className='flex justify-center'>
+							<Calendar />
+						</div>
+					</div>
           
           <div
             id={'buy'}
             className='relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-50 via-white to-blue-50 shadow-xl'
           >
             {/* Декоровані кола на фоні */}
-            <div className='pointer-events-none absolute -top-16 -right-16 h-56 w-56 rounded-full bg-blue-200/30 blur-3xl' />
-            <div className='pointer-events-none absolute -bottom-16 -left-16 h-56 w-56 rounded-full bg-indigo-200/30 blur-3xl' />
+            {/*<div className='pointer-events-none absolute -top-16 -right-16 h-56 w-56 rounded-full bg-blue-200/30 blur-3xl' />*/}
+            {/*<div className='pointer-events-none absolute -bottom-16 -left-16 h-56 w-56 rounded-full bg-indigo-200/30 blur-3xl' />*/}
             
-            <div className='relative p-6 sm:p-8'>
-              <div className='flex items-center justify-center gap-2 mb-5'>
+            {/*<div className='relative p-6 sm:p-8'>*/}
+            {/*  <div className='flex items-center justify-center gap-2 mb-5'>*/}
       {/*<span className='inline-flex items-center gap-2 rounded-full bg-blue-600/10 px-3 py-1 text-xs font-semibold text-blue-700 ring-1 ring-inset ring-blue-600/20'>*/}
       {/*  <svg width='16' height='16' viewBox='0 0 24 24' fill='none' className='text-blue-600'>*/}
       {/*    <path d='M12 3v18m9-9H3' stroke='currentColor' strokeWidth='2' strokeLinecap='round'/>*/}
       {/*  </svg>*/}
       {/*  Набір обмежений*/}
       {/*</span>*/}
-              </div>
+      {/*        </div>*/}
               
               <div className='flex flex-col md:flex-row gap-2'>
               
               {/* Колонка — Очікування індивідуальних */}
-                <div className='flex flex-col justify-between bg-white/80 backdrop-blur-sm rounded-xl border border-gray-200 p-5 sm:p-6 shadow-sm hover:shadow-md transition-shadow'>
-                  <div className='flex items-start gap-3'>
-                    <div className='shrink-0 mt-1 text-blue-600'>
-                      <svg width='24' height='24' viewBox='0 0 24 24' fill='none'>
-                        <path d='M12 2a10 10 0 100 20 10 10 0 000-20Zm0 6v5l3 1' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'/>
-                      </svg>
-                    </div>
-                    <div>
-                      <h4 className='text-lg font-bold text-gray-900'>
-                        Індивідуальні уроки
-                      </h4>
-                      <p className='mt-2 text-gray-700'>
-                        Наявність вільних місць і зручних віконець узгоджуйте індивідуально.                      </p>
-                    </div>
-                  </div>
-                  
-                  <div className='mt-4 flex justify-center'>
-                    <a href='https://t.me/yana_vocalcoach' className='w-full sm:w-auto'>
-                      <Button
-                        variant='primary'
-                        as='button'
-                        size='sm'
-                        className='w-full sm:w-auto group'
-                        onClick={() => {
-                          const pricingSection = document.getElementById('pricing')
-                          if (pricingSection) {
-                            pricingSection.scrollIntoView({ behavior: 'smooth' })
-                          }
-                        }}
-                      >
-                        <span className='inline-flex items-center gap-2'>
-                          Написати
-                          <svg
-                            className='w-4 h-4 transition-transform group-hover:translate-x-0.5'
-                            viewBox='0 0 24 24'
-                            fill='none'
-                          >
-                            <path d='M5 12h14M13 5l7 7-7 7' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'/>
-                          </svg>
-                        </span>
-                      </Button>
-                    </a>
-                  </div>
-                </div>
+              {/*  <div className='flex flex-col justify-between bg-white/80 backdrop-blur-sm rounded-xl border border-gray-200 p-5 sm:p-6 shadow-sm hover:shadow-md transition-shadow'>*/}
+              {/*    <div className='flex items-start gap-3'>*/}
+              {/*      <div className='shrink-0 mt-1 text-blue-600'>*/}
+              {/*        <svg width='24' height='24' viewBox='0 0 24 24' fill='none'>*/}
+              {/*          <path d='M12 2a10 10 0 100 20 10 10 0 000-20Zm0 6v5l3 1' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'/>*/}
+              {/*        </svg>*/}
+              {/*      </div>*/}
+              {/*      <div>*/}
+              {/*        <h4 className='text-lg font-bold text-gray-900'>*/}
+              {/*          Індивідуальні уроки*/}
+              {/*        </h4>*/}
+              {/*        <p className='mt-2 text-gray-700'>*/}
+              {/*          Наявність вільних місць і зручних віконець узгоджуйте індивідуально.                      </p>*/}
+              {/*      </div>*/}
+              {/*    </div>*/}
+              {/*    */}
+              {/*    <div className='mt-4 flex justify-center'>*/}
+              {/*      <a href='https://t.me/yana_vocalcoach' className='w-full sm:w-auto'>*/}
+              {/*        <Button*/}
+              {/*          variant='primary'*/}
+              {/*          as='button'*/}
+              {/*          size='sm'*/}
+              {/*          className='w-full sm:w-auto group'*/}
+              {/*          onClick={() => {*/}
+              {/*            const pricingSection = document.getElementById('pricing')*/}
+              {/*            if (pricingSection) {*/}
+              {/*              pricingSection.scrollIntoView({ behavior: 'smooth' })*/}
+              {/*            }*/}
+              {/*          }}*/}
+              {/*        >*/}
+              {/*          <span className='inline-flex items-center gap-2'>*/}
+              {/*            Написати*/}
+              {/*            <svg*/}
+              {/*              className='w-4 h-4 transition-transform group-hover:translate-x-0.5'*/}
+              {/*              viewBox='0 0 24 24'*/}
+              {/*              fill='none'*/}
+              {/*            >*/}
+              {/*              <path d='M5 12h14M13 5l7 7-7 7' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'/>*/}
+              {/*            </svg>*/}
+              {/*          </span>*/}
+              {/*        </Button>*/}
+              {/*      </a>*/}
+              {/*    </div>*/}
+              {/*  </div>*/}
                 
                 {/* Вертикальний поділ на md */}
                 {/*<div className='hidden md:block h-full w-px mx-auto bg-gradient-to-b from-transparent via-gray-200 to-transparent' aria-hidden='true' />*/}
@@ -334,7 +288,7 @@ const PricingSection = () => {
                 {/*</div>*/}
               </div>
               
-            </div>
+            {/*</div>*/}
           </div>
         
         </div>

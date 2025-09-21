@@ -14,7 +14,7 @@ const CalendarSection = () => {
 
 	// Массив заблокированных дат (в формате 'YYYY-MM-DD')
 	const blockedDates = ['2025-06-27']
-  const blockAllDays = true
+  const blockAllDays = false
 
 	useEffect(() => {
 		const fetchEvents = async () => {
@@ -55,13 +55,10 @@ const CalendarSection = () => {
 						})
 					)
 
-				// Генерируем все возможные слоты (по 1 часу) с 12:00 до 20:00
-				const allSlots = generateAllSlots(
+				// Используем только нужные слоты
+				const allSlots = generateCustomSlots(
 					firstDayOfMonth,
-					lastDayOfNextMonth,
-					'12:00',
-					'20:00',
-					60
+					lastDayOfNextMonth
 				)
 
 				// Фильтруем свободные слоты
@@ -94,42 +91,45 @@ const CalendarSection = () => {
 		fetchEvents()
 	}, [])
 
-	function generateAllSlots(
-		startDate: Date,
-		endDate: Date,
-		startTime: string,
-		endTime: string,
-		duration: number
-	) {
+	// Функция генерации только нужных слотов по условиям задачи
+	function generateCustomSlots(startDate: Date, endDate: Date) {
 		const slots = []
-		const [startH, startM] = startTime.split(':').map(Number)
-		const [endH, endM] = endTime.split(':').map(Number)
-
 		const currentDate = new Date(startDate)
 
 		while (currentDate <= endDate) {
-			const dayOfWeek = currentDate.getDay() // 0 - воскресенье, 4 - четверг, 6 - суббота
+			const year = currentDate.getFullYear()
+			const month = currentDate.getMonth() + 1 // 0-based
+			const day = currentDate.getDate()
+			const dayOfWeek = currentDate.getDay() // 0 - Sunday, 1 - Monday, ...
+			const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`
 
-			// Пропускаем четверги (4), субботы (6) и воскресенья (0)
-			if (dayOfWeek !== 0 && dayOfWeek !== 4 && dayOfWeek !== 6) {
-				const dateStr = `${currentDate.getFullYear()}-${String(
-					currentDate.getMonth() + 1
-				).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`
-
-				let hour = startH
-				let minute = startM
-
-				while (hour < endH || (hour === endH && minute <= endM)) {
-					const time = `${hour.toString().padStart(2, '0')}:${minute
-						.toString()
-						.padStart(2, '0')}`
-					slots.push({ date: dateStr, time })
-
-					minute += duration
-					if (minute >= 60) {
-						hour += 1
-						minute = 0
-					}
+			// До октября 2025 — только старые слоты
+			if (year < 2025 || (year === 2025 && month < 10)) {
+				if (dayOfWeek === 2) { // Вторник
+					slots.push({ date: dateStr, time: '17:00' })
+				}
+				if (dayOfWeek === 3) { // Среда
+					slots.push({ date: dateStr, time: '15:00' })
+				}
+				if (dayOfWeek === 4) { // Четверг
+					slots.push({ date: dateStr, time: '10:00' })
+					slots.push({ date: dateStr, time: '14:00' })
+				}
+			} else {
+				// С октября 2025 — оба набора слотов
+				if (dayOfWeek === 1) { // Понедельник
+					slots.push({ date: dateStr, time: '10:00' })
+					slots.push({ date: dateStr, time: '15:00' })
+				}
+				if (dayOfWeek === 2) { // Вторник
+					slots.push({ date: dateStr, time: '17:00' })
+				}
+				if (dayOfWeek === 3) { // Среда
+					slots.push({ date: dateStr, time: '15:00' })
+				}
+				if (dayOfWeek === 4) { // Четверг
+					slots.push({ date: dateStr, time: '10:00' })
+					slots.push({ date: dateStr, time: '14:00' })
 				}
 			}
 
@@ -164,61 +164,36 @@ const CalendarSection = () => {
 	}
 
 	// Проверка доступности даты
-  const isDateAvailable = (day: number) => {
-    // Если включена полная блокировка — блокируем все дни
-    if (blockAllDays) {
-      return false
-    }
-    
-    const date = new Date(currentYear, currentMonth, day)
-    const year = date.getFullYear()
-    const month = String(date.getMonth() + 1).padStart(2, '0')
-    const dayFormatted = String(date.getDate()).padStart(2, '0')
-    const dateString = `${year}-${month}-${dayFormatted}`
-    
-    // Блокируем указанные даты
-    if (blockedDates.includes(dateString)) {
-      return false
-    }
-    
-    // Блокируем четверги (4), субботы (6) и воскресенья (0)
-    const dayOfWeek = date.getDay()
-    if (dayOfWeek === 0 || dayOfWeek === 4 || dayOfWeek === 6) {
-      return false
-    }
-    
-    // Получаем слоты для конкретного дня
-    const daySlots = availableSlots[dateString] || []
-    
-    // Получаем все возможные слоты с 12:00 до 20:00
-    const allTimes = generateAllSlots(date, date, '12:00', '20:00', 60).map(s => s.time)
-    
-    // Считаем количество занятых слотов
-    const busySlotsCount = allTimes.length - daySlots.length
-    
-    // Блокируем день, если 6 или более слотов заняты
-    return busySlotsCount < 6
-  }
-  
-  
-  // Фильтрация слотов без окон
-	function getContiguousSlots(slots: string[], allTimes: string[]): string[] {
-		if (slots.length === 0) return []
-		const busyTimes = allTimes.filter(t => !slots.includes(t))
-		// Если нет занятых слотов — разрешаем все свободные, кроме 20:00
-		if (busyTimes.length === 0) {
-			return slots.filter(time => time !== '20:00')
-		}
-		return slots.filter(time => {
-			if (time === '20:00') return false
-			const idx = allTimes.indexOf(time)
-			const prev = idx > 0 ? allTimes[idx - 1] : null
-			const next = idx < allTimes.length - 1 ? allTimes[idx + 1] : null
-			return (
-				(prev && busyTimes.includes(prev)) || (next && busyTimes.includes(next))
-			)
-		})
+	const isDateAvailable = (day: number) => {
+		if (blockAllDays) return false
+		const date = new Date(currentYear, currentMonth, day)
+		const year = date.getFullYear()
+		const month = String(date.getMonth() + 1).padStart(2, '0')
+		const dayFormatted = String(date.getDate()).padStart(2, '0')
+		const dateString = `${year}-${month}-${dayFormatted}`
+		if (blockedDates.includes(dateString)) return false
+		// Дата доступна, если есть хотя бы один свободный слот
+		return (availableSlots[dateString] || []).length > 0
 	}
+
+	// Фильтрация слотов без окон
+	// function getContiguousSlots(slots: string[], allTimes: string[]): string[] {
+	// 	if (slots.length === 0) return []
+	// 	const busyTimes = allTimes.filter(t => !slots.includes(t))
+	// 	// Если нет занятых слотов — разрешаем все свободные, кроме 20:00
+	// 	if (busyTimes.length === 0) {
+	// 		return slots.filter(time => time !== '20:00')
+	// 	}
+	// 	return slots.filter(time => {
+	// 		if (time === '20:00') return false
+	// 		const idx = allTimes.indexOf(time)
+	// 		const prev = idx > 0 ? allTimes[idx - 1] : null
+	// 		const next = idx < allTimes.length - 1 ? allTimes[idx + 1] : null
+	// 		return (
+	// 			(prev && busyTimes.includes(prev)) || (next && busyTimes.includes(next))
+	// 		)
+	// 	})
+	// }
 
 	// Обработчик выбора даты
 	const handleDateSelect = (day: number) => {
@@ -352,34 +327,17 @@ const CalendarSection = () => {
 								{formatDate(selectedDate)}
 							</h4>
 							<div className='grid grid-cols-2 gap-3'>
-								{(() => {
-									const allTimes = generateAllSlots(
-										new Date(selectedDate + 'T00:00:00'),
-										new Date(selectedDate + 'T00:00:00'),
-										'12:00',
-										'19:00',
-										60
-									).map(s => s.time)
-									const filtered = getContiguousSlots(
-										availableSlots[selectedDate],
-										allTimes
-									)
-									return filtered.map(time => (
-										<button
-											key={time}
-											onClick={() => handleTimeSelect(time)}
-											className={`py-2 px-4 rounded-lg border transition-colors cursor-pointer
-                        ${
-													selectedTime === time
-														? 'bg-blue-600 text-white border-blue-600'
-														: 'border-gray-300 hover:bg-gray-50'
-												}
-                      `}
-										>
-											{time}
-										</button>
-									))
-								})()}
+								{(availableSlots[selectedDate] || []).map(time => (
+									<button
+										key={time}
+										onClick={() => handleTimeSelect(time)}
+										className={`py-2 px-4 rounded-lg border transition-colors cursor-pointer
+            ${selectedTime === time ? 'bg-blue-600 text-white border-blue-600' : 'border-gray-300 hover:bg-gray-50'}
+          `}
+									>
+										{time}
+									</button>
+								))}
 							</div>
 						</div>
 					) : (
@@ -389,7 +347,7 @@ const CalendarSection = () => {
 					)}
 
 					{selectedDate && selectedTime && (
-						<div className='mt-8 max-sm:p-2'>
+						<div className='mt-8 max_sm:p-2'>
 							<div className='mb-4 p-4 bg-gray-50 rounded-lg'>
 								<p className='font-medium'>Ви обрали:</p>
 								<p>
