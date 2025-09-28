@@ -3,6 +3,8 @@
 import {useEffect, useState} from 'react'
 import Button from '@/ui/Button'
 
+const calendarUrl = process.env.NEXT_PUBLIC_CALENDAR_URL;
+
 const CalendarSection = () => {
 	const [selectedDate, setSelectedDate] = useState<string | null>(null)
 	const [selectedTime, setSelectedTime] = useState<string | null>(null)
@@ -26,14 +28,13 @@ const CalendarSection = () => {
 					now.getMonth() + 2,
 					0
 				)
-
-				const response = await fetch(
-					`https://www.googleapis.com/calendar/v3/calendars/yanasabada1@gmail.com/events?` +
-						`key=AIzaSyAKbkQxAlUHUT3jK2EFFfFzRk4LegDlUHs&` +
-						`timeMin=${encodeURIComponent(firstDayOfMonth.toISOString())}&` +
-						`timeMax=${encodeURIComponent(lastDayOfNextMonth.toISOString())}&` +
-						`singleEvents=true&orderBy=startTime`
-				)
+        
+        const response = await fetch(
+          `${calendarUrl}?key=AIzaSyAKbkQxAlUHUT3jK2EFFfFzRk4LegDlUHs&` +
+          `timeMin=${encodeURIComponent(firstDayOfMonth.toISOString())}&` +
+          `timeMax=${encodeURIComponent(lastDayOfNextMonth.toISOString())}&` +
+          `singleEvents=true&orderBy=startTime`
+        );
 
 				const data = await response.json()
 
@@ -109,7 +110,7 @@ const CalendarSection = () => {
 					slots.push({ date: dateStr, time: '17:00' })
 				}
 				if (dayOfWeek === 3) { // Среда
-					slots.push({ date: dateStr, time: '15:00' })
+					slots.push({ date: dateStr, time: '16:00' })
 				}
 				if (dayOfWeek === 4) { // Четверг
 					slots.push({ date: dateStr, time: '10:00' })
@@ -126,7 +127,7 @@ const CalendarSection = () => {
 					slots.push({ date: dateStr, time: '17:00' })
 				}
 				if (dayOfWeek === 3) { // Среда
-					slots.push({ date: dateStr, time: '15:00' })
+					slots.push({ date: dateStr, time: '16:00' })
 				}
 				if (dayOfWeek === 4) { // Четверг
 					slots.push({ date: dateStr, time: '10:00' })
@@ -165,36 +166,19 @@ const CalendarSection = () => {
 	}
 
 	// Проверка доступности даты
-	const isDateAvailable = (day: number) => {
-		if (blockAllDays) return false
-		const date = new Date(currentYear, currentMonth, day)
-		const year = date.getFullYear()
-		const month = String(date.getMonth() + 1).padStart(2, '0')
-		const dayFormatted = String(date.getDate()).padStart(2, '0')
-		const dateString = `${year}-${month}-${dayFormatted}`
-		if (blockedDates.includes(dateString)) return false
-		// Дата доступна, если есть хотя бы один свободный слот
-		return (availableSlots[dateString] || []).length > 0
-	}
-
-	// Фильтрация слотов без окон
-	// function getContiguousSlots(slots: string[], allTimes: string[]): string[] {
-	// 	if (slots.length === 0) return []
-	// 	const busyTimes = allTimes.filter(t => !slots.includes(t))
-	// 	// Если нет занятых слотов — разрешаем все свободные, кроме 20:00
-	// 	if (busyTimes.length === 0) {
-	// 		return slots.filter(time => time !== '20:00')
-	// 	}
-	// 	return slots.filter(time => {
-	// 		if (time === '20:00') return false
-	// 		const idx = allTimes.indexOf(time)
-	// 		const prev = idx > 0 ? allTimes[idx - 1] : null
-	// 		const next = idx < allTimes.length - 1 ? allTimes[idx + 1] : null
-	// 		return (
-	// 			(prev && busyTimes.includes(prev)) || (next && busyTimes.includes(next))
-	// 		)
-	// 	})
-	// }
+  const isDateAvailable = (day: number) => {
+    if (blockAllDays) return false;
+    const date = new Date(currentYear, currentMonth, day);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (date < today) return false;
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const dayFormatted = String(date.getDate()).padStart(2, '0');
+    const dateString = `${year}-${month}-${dayFormatted}`;
+    if (blockedDates.includes(dateString)) return false;
+    return (availableSlots[dateString] || []).length > 0;
+  };
 
 	// Обработчик выбора даты
 	const handleDateSelect = (day: number) => {
