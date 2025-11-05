@@ -130,7 +130,7 @@ const CalendarSection = () => {
 					slots.push({ date: dateStr, time: '15:00' })
 				}
 				if (dayOfWeek === 4) { // Четверг
-					slots.push({ date: dateStr, time: '10:00' })
+					// slots.push({ date: dateStr, time: '10:00' })
 					// slots.push({ date: dateStr, time: '15:00' })
 				}
 			}
