@@ -120,7 +120,7 @@ const CalendarSection = () => {
 			} else {
 				// С октября 2025 — оба набора слотов
 				if (dayOfWeek === 1) { // Понедельник
-					slots.push({ date: dateStr, time: '10:00' })
+					// slots.push({ date: dateStr, time: '10:00' })
 					slots.push({ date: dateStr, time: '15:00' })
 				}
 				if (dayOfWeek === 2) { // Вторник
