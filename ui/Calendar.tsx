@@ -117,23 +117,28 @@ const CalendarSection = () => {
 					slots.push({ date: dateStr, time: '14:00' })
           slots.push({ date: dateStr, time: '17:00' })
 				}
-			} else {
+			}  else {
 				// С октября 2025 — оба набора слотов
 				if (dayOfWeek === 1) { // Понедельник
 					// slots.push({ date: dateStr, time: '10:00' })
-					slots.push({ date: dateStr, time: '15:00' })
+					// slots.push({ date: dateStr, time: '15:00' })
 				}
 				if (dayOfWeek === 2) { // Вторник
+					// slots.push({ date: dateStr, time: '16:00' })
 					slots.push({ date: dateStr, time: '17:00' })
 				}
 				if (dayOfWeek === 3) { // Среда
-					slots.push({ date: dateStr, time: '15:00' })
-				}
-				if (dayOfWeek === 4) { // Четверг
-					// slots.push({ date: dateStr, time: '10:00' })
 					// slots.push({ date: dateStr, time: '15:00' })
 				}
-			}
+				if (dayOfWeek === 4) { // Четверг
+					slots.push({ date: dateStr, time: '17:00' })
+					// slots.push({ date: dateStr, time: '15:00' })
+				}
+        if (dayOfWeek === 5) { // Пятница
+          slots.push({ date: dateStr, time: '15:00' })
+          slots.push({ date: dateStr, time: '16:00' })
+        }
+      }
 
 			currentDate.setDate(currentDate.getDate() + 1)
 		}
@@ -171,6 +176,9 @@ const CalendarSection = () => {
     const date = new Date(currentYear, currentMonth, day);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
+    if (date.getFullYear() === 2026) {
+      return false; // Блокируем весь 2026 год
+    }
     if (date < today) return false;
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
