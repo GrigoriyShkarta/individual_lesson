@@ -96,56 +96,45 @@ const CalendarSection = () => {
 	function generateCustomSlots(startDate: Date, endDate: Date) {
 		const slots = []
 		const currentDate = new Date(startDate)
-
+		
 		while (currentDate <= endDate) {
 			const year = currentDate.getFullYear()
 			const month = currentDate.getMonth() + 1 // 0-based
 			const day = currentDate.getDate()
 			const dayOfWeek = currentDate.getDay() // 0 - Sunday, 1 - Monday, ...
 			const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`
-
-			// До октября 2025 — только старые слоты
-			if (year < 2025 || (year === 2025 && month < 10)) {
-				if (dayOfWeek === 2) { // Вторник
-					slots.push({ date: dateStr, time: '17:00' })
-				}
-				if (dayOfWeek === 3) { // Среда
-					slots.push({ date: dateStr, time: '16:00' })
-				}
-				if (dayOfWeek === 4) { // Четверг
-					slots.push({ date: dateStr, time: '10:00' })
+			
+			// === Условие 1: разрешены только январь 2026 ===
+			if (year === 2026 && month === 1) {
+				// Вторник
+				if (dayOfWeek === 2) {
 					slots.push({ date: dateStr, time: '14:00' })
-          slots.push({ date: dateStr, time: '17:00' })
+					// === Условие 3: с 13 января открываем 18:00 ===
+					if (day >= 13) {
+						slots.push({ date: dateStr, time: '18:00' })
+					}
 				}
-			}  else {
-				// С октября 2025 — оба набора слотов
-				if (dayOfWeek === 1) { // Понедельник
-					// slots.push({ date: dateStr, time: '10:00' })
-					// slots.push({ date: dateStr, time: '15:00' })
-				}
-				if (dayOfWeek === 2) { // Вторник
-					// slots.push({ date: dateStr, time: '16:00' })
+				// Среда
+				if (dayOfWeek === 3) {
+					slots.push({ date: dateStr, time: '13:00' })
 					slots.push({ date: dateStr, time: '17:00' })
 				}
-				if (dayOfWeek === 3) { // Среда
-					// slots.push({ date: dateStr, time: '15:00' })
+				// Четверг
+				if (dayOfWeek === 4) {
+					slots.push({ date: dateStr, time: '17:00' })
 				}
-				if (dayOfWeek === 4) { // Четверг
+				// Пятница
+				if (dayOfWeek === 5) {
 					slots.push({ date: dateStr, time: '16:00' })
-					// slots.push({ date: dateStr, time: '15:00' })
 				}
-        if (dayOfWeek === 5) { // Пятница
-          slots.push({ date: dateStr, time: '15:00' })
-          slots.push({ date: dateStr, time: '16:00' })
-        }
-      }
-
+			}
+			
 			currentDate.setDate(currentDate.getDate() + 1)
 		}
-
+		
 		return slots
 	}
-
+	
 	// Генерация дней месяца
 	const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate()
 	const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay()
@@ -171,23 +160,31 @@ const CalendarSection = () => {
 	}
 
 	// Проверка доступности даты
-  const isDateAvailable = (day: number) => {
-    if (blockAllDays) return false;
-    const date = new Date(currentYear, currentMonth, day);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    if (date.getFullYear() === 2026) {
-      return false; // Блокируем весь 2026 год
-    }
-    if (date < today) return false;
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const dayFormatted = String(date.getDate()).padStart(2, '0');
-    const dateString = `${year}-${month}-${dayFormatted}`;
-    if (blockedDates.includes(dateString)) return false;
-    return (availableSlots[dateString] || []).length > 0;
-  };
-
+	const isDateAvailable = (day: number) => {
+		if (blockAllDays) return false
+		
+		const date = new Date(currentYear, currentMonth, day)
+		const today = new Date()
+		today.setHours(0, 0, 0, 0)
+		
+		// === Блокируем все кроме января 2026 ===
+		if (!(date.getFullYear() === 2026 && date.getMonth() === 0)) {
+			return false
+		}
+		
+		if (date < today) return false
+		
+		const year = date.getFullYear()
+		const month = String(date.getMonth() + 1).padStart(2, '0')
+		const dayFormatted = String(date.getDate()).padStart(2, '0')
+		const dateString = `${year}-${month}-${dayFormatted}`
+		
+		if (blockedDates.includes(dateString)) return false
+		
+		return (availableSlots[dateString] || []).length > 0
+	}
+	
+	
 	// Обработчик выбора даты
 	const handleDateSelect = (day: number) => {
 		const date = new Date(currentYear, currentMonth, day)
