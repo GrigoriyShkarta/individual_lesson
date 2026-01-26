@@ -104,12 +104,11 @@ const CalendarSection = () => {
 			const dayOfWeek = currentDate.getDay() // 0 - Sunday, 1 - Monday, ...
 			const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`
 			
-			// === Условие 1: разрешены только январь 2026 ===
+			// === Січень 2026 ===
 			if (year === 2026 && month === 1) {
 				// Вторник
 				if (dayOfWeek === 2) {
 					slots.push({ date: dateStr, time: '14:00' })
-					// === Условие 3: с 13 января открываем 18:00 ===
 					if (day >= 13) {
 						slots.push({ date: dateStr, time: '18:00' })
 					}
@@ -124,6 +123,19 @@ const CalendarSection = () => {
 					slots.push({ date: dateStr, time: '18:00' })
 				}
 				// Пятница
+				if (dayOfWeek === 5) {
+					slots.push({ date: dateStr, time: '16:00' })
+				}
+			}
+
+			// === З лютого 2026 ===
+			if (year === 2026 && month >= 2) {
+				// Вівторок, середа, четверг
+				if (dayOfWeek === 2 || dayOfWeek === 3 || dayOfWeek === 4) {
+					slots.push({ date: dateStr, time: '13:00' })
+					slots.push({ date: dateStr, time: '18:00' })
+				}
+				// П'ятниця
 				if (dayOfWeek === 5) {
 					slots.push({ date: dateStr, time: '16:00' })
 				}
@@ -167,8 +179,8 @@ const CalendarSection = () => {
 		const today = new Date()
 		today.setHours(0, 0, 0, 0)
 		
-		// === Блокируем все кроме января 2026 ===
-		if (!(date.getFullYear() === 2026 && date.getMonth() === 0)) {
+		// === Дозволяємо січень та лютий 2026 ===
+		if (!(date.getFullYear() === 2026 && (date.getMonth() === 0 || date.getMonth() === 1))) {
 			return false
 		}
 		
