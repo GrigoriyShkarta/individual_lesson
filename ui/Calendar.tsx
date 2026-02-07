@@ -99,7 +99,7 @@ const CalendarSection = () => {
 		
 		while (currentDate <= endDate) {
 			const year = currentDate.getFullYear()
-			const month = currentDate.getMonth() + 1 // 0-based
+			const month = currentDate.getMonth() + 1
 			const day = currentDate.getDate()
 			const dayOfWeek = currentDate.getDay() // 0 - Sunday, 1 - Monday, ...
 			const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`
