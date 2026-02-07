@@ -128,16 +128,35 @@ const CalendarSection = () => {
 				}
 			}
 
-			// === З лютого 2026 ===
-			if (year === 2026 && month >= 2) {
+			// === Лютий 2026 ===
+			if (year === 2026 && month === 2) {
 				// Вівторок, середа, четверг
 				if (dayOfWeek === 2 || dayOfWeek === 3 || dayOfWeek === 4) {
+					if (dateStr === '2026-02-11') {
+						slots.push({ date: dateStr, time: '14:00' })
+					}
 					slots.push({ date: dateStr, time: '13:00' })
 					slots.push({ date: dateStr, time: '18:00' })
 				}
 				// П'ятниця
 				if (dayOfWeek === 5) {
-					slots.push({ date: dateStr, time: '16:00' })
+					if (dateStr === '2026-02-13' || dateStr >= '2026-02-27') {
+						slots.push({ date: dateStr, time: '15:00' })
+					} else {
+						slots.push({ date: dateStr, time: '16:00' })
+					}
+				}
+			}
+
+			// === Березень 2026 ===
+			if (year === 2026 && month === 3) {
+				// Четвер
+				if (dayOfWeek === 4) {
+					slots.push({ date: dateStr, time: '13:00' })
+				}
+				// П'ятниця
+				if (dayOfWeek === 5) {
+					slots.push({ date: dateStr, time: '15:00' })
 				}
 			}
 			
@@ -179,8 +198,8 @@ const CalendarSection = () => {
 		const today = new Date()
 		today.setHours(0, 0, 0, 0)
 		
-		// === Дозволяємо січень та лютий 2026 ===
-		if (!(date.getFullYear() === 2026 && (date.getMonth() === 0 || date.getMonth() === 1))) {
+		// === Дозволяємо січень, лютий та березень 2026 ===
+		if (!(date.getFullYear() === 2026 && (date.getMonth() === 0 || date.getMonth() === 1 || date.getMonth() === 2))) {
 			return false
 		}
 		
@@ -231,17 +250,17 @@ const CalendarSection = () => {
 			id={'buy'}
 			className='bg-white rounded-xl shadow-lg p-6 max-sm:p-0 w-[80%] max-sm:w-full'
 		>
-			<h3 className='text-2xl font-bold mb-6 text-center text-gray-900'>
+			<h3 className='mb-6 text-2xl font-bold text-center text-gray-900'>
 				Оберіть дату та час
 			</h3>
 
-			<div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
+			<div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
 				{/* Календарь */}
 				<div>
 					<div className='flex justify-between items-center mb-4'>
 						<button
 							onClick={prevMonth}
-							className='p-2 rounded-full hover:bg-gray-100 transition-colors'
+							className='p-2 rounded-full transition-colors hover:bg-gray-100'
 						>
 							<svg className='w-5 h-5' fill='currentColor' viewBox='0 0 20 20'>
 								<path
@@ -259,7 +278,7 @@ const CalendarSection = () => {
 						</h4>
 						<button
 							onClick={nextMonth}
-							className='p-2 rounded-full hover:bg-gray-100 transition-colors'
+							className='p-2 rounded-full transition-colors hover:bg-gray-100'
 						>
 							<svg className='w-5 h-5' fill='currentColor' viewBox='0 0 20 20'>
 								<path
@@ -275,7 +294,7 @@ const CalendarSection = () => {
 						{['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'].map(day => (
 							<div
 								key={day}
-								className='text-center text-sm text-gray-500 font-medium'
+								className='text-sm font-medium text-center text-gray-500'
 							>
 								{day}
 							</div>
@@ -304,12 +323,12 @@ const CalendarSection = () => {
 									onClick={() => handleDateSelect(day)}
 									disabled={!isAvailable}
 									className={`h-10 rounded-full flex items-center justify-center cursor-pointer
-                    ${isSelected ? 'bg-blue-600 text-white' : ''}
+                    ${isSelected ? 'text-white bg-blue-600' : ''}
                     ${
 											isAvailable
 												? isSelected
-													? 'bg-blue-600 text-white'
-													: 'hover:bg-gray-100 text-gray-900'
+													? 'text-white bg-blue-600'
+													: 'text-gray-900 hover:bg-gray-100'
 												: 'text-gray-300 cursor-not-allowed'
 										}
                   `}
@@ -325,7 +344,7 @@ const CalendarSection = () => {
 				<div>
 					{selectedDate ? (
 						<div className='max-sm:p-2'>
-							<h4 className='text-lg font-bold text-gray-900 mb-4'>
+							<h4 className='mb-4 text-lg font-bold text-gray-900'>
 								{formatDate(selectedDate)}
 							</h4>
 							<div className='grid grid-cols-2 gap-3'>
@@ -343,14 +362,14 @@ const CalendarSection = () => {
 							</div>
 						</div>
 					) : (
-						<div className='h-full flex items-center justify-center'>
+						<div className='flex justify-center items-center h-full'>
 							<p className='text-gray-500'>Оберіть дату з календаря</p>
 						</div>
 					)}
 
 					{selectedDate && selectedTime && (
 						<div className='mt-8 max_sm:p-2'>
-							<div className='mb-4 p-4 bg-gray-50 rounded-lg'>
+							<div className='p-4 mb-4 bg-gray-50 rounded-lg'>
 								<p className='font-medium'>Ви обрали:</p>
 								<p>
 									{formatDate(selectedDate)} о {selectedTime}
