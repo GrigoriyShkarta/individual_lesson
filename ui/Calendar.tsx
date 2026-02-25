@@ -149,9 +149,10 @@ const CalendarSection = () => {
 			}
 
 			// === Березень 2026 ===
-			if (year === 2026 && month === 3) {
-				console.log('check')
-
+			if (year === 2026 && month >= 3) {
+				if (dayOfWeek === 2) {
+					slots.push({ date: dateStr, time: '14:00' })
+				}
 				// Четвер
 				if (dayOfWeek === 4) {
 					slots.push({ date: dateStr, time: '13:00' })
