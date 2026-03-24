@@ -153,13 +153,16 @@ const CalendarSection = () => {
 				if (dayOfWeek === 2) {
 					slots.push({ date: dateStr, time: '14:00' })
 				}
+				if (dayOfWeek === 3) {
+					slots.push({ date: dateStr, time: '14:00' })
+				}
 				// Четвер
 				if (dayOfWeek === 4) {
-					slots.push({ date: dateStr, time: '15:00' })
+					slots.push({ date: dateStr, time: '16:00' })
 				}
 				// П'ятниця
 				if (dayOfWeek === 5) {
-					slots.push({ date: dateStr, time: '15:00' })
+					slots.push({ date: dateStr, time: '14:00' })
 				}
 			}
 			
