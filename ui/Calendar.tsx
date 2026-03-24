@@ -23,16 +23,16 @@ const CalendarSection = () => {
 			try {
 				const now = new Date()
 				const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
-				const lastDayOfNextMonth = new Date(
+				const lastDayOfFuture = new Date(
 					now.getFullYear(),
-					now.getMonth() + 2,
+					now.getMonth() + 6,
 					0
 				)
         
         const response = await fetch(
           `${calendarUrl}?key=AIzaSyAKbkQxAlUHUT3jK2EFFfFzRk4LegDlUHs&` +
           `timeMin=${encodeURIComponent(firstDayOfMonth.toISOString())}&` +
-          `timeMax=${encodeURIComponent(lastDayOfNextMonth.toISOString())}&` +
+          `timeMax=${encodeURIComponent(lastDayOfFuture.toISOString())}&` +
           `singleEvents=true&orderBy=startTime`
         );
 
@@ -59,7 +59,7 @@ const CalendarSection = () => {
 				// Используем только нужные слоты
 				const allSlots = generateCustomSlots(
 					firstDayOfMonth,
-					lastDayOfNextMonth
+					lastDayOfFuture
 				)
 
 				// Фильтруем свободные слоты
@@ -204,8 +204,8 @@ const CalendarSection = () => {
 		const today = new Date()
 		today.setHours(0, 0, 0, 0)
 		
-		// === Дозволяємо січень, лютий та березень 2026 ===
-		if (!(date.getFullYear() === 2026 && (date.getMonth() === 0 || date.getMonth() === 1 || date.getMonth() === 2))) {
+		// === Дозволяємо з січня 2026 року ===
+		if (!(date.getFullYear() === 2026 && date.getMonth() >= 0)) {
 			return false
 		}
 		
