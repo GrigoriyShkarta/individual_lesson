@@ -103,66 +103,21 @@ const CalendarSection = () => {
 			const day = currentDate.getDate()
 			const dayOfWeek = currentDate.getDay() // 0 - Sunday, 1 - Monday, ...
 			const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`
-			
-			// === Січень 2026 ===
-			if (year === 2026 && month === 1) {
-				// Вторник
-				if (dayOfWeek === 2) {
-					slots.push({ date: dateStr, time: '14:00' })
-					if (day >= 13) {
-						slots.push({ date: dateStr, time: '18:00' })
-					}
-				}
-				// Среда
-				if (dayOfWeek === 3) {
-					slots.push({ date: dateStr, time: '13:00' })
-					slots.push({ date: dateStr, time: '17:00' })
-				}
-				// Четверг
-				if (dayOfWeek === 4) {
-					slots.push({ date: dateStr, time: '18:00' })
-				}
-				// Пятница
-				if (dayOfWeek === 5) {
-					slots.push({ date: dateStr, time: '16:00' })
-				}
-			}
-
-			// === Лютий 2026 ===
-			if (year === 2026 && month === 2) {
-				// Вівторок, середа, четверг
-				if (dayOfWeek === 2 || dayOfWeek === 3 || dayOfWeek === 4) {
-					if (dateStr === '2026-02-11') {
-						slots.push({ date: dateStr, time: '14:00' })
-					}
-					slots.push({ date: dateStr, time: '13:00' })
-					slots.push({ date: dateStr, time: '18:00' })
-				}
-				// П'ятниця
-				if (dayOfWeek === 5) {
-					if (dateStr === '2026-02-13' || dateStr >= '2026-02-27') {
-						slots.push({ date: dateStr, time: '15:00' })
-					} else {
-						slots.push({ date: dateStr, time: '16:00' })
-					}
-				}
-			}
 
 			// === Березень 2026 ===
 			if (year === 2026 && month >= 3) {
-				if (dayOfWeek === 2) {
-					slots.push({ date: dateStr, time: '14:00' })
-				}
+				
 				if (dayOfWeek === 3) {
-					slots.push({ date: dateStr, time: '14:00' })
+					slots.push({ date: dateStr, time: '17:00' })
 				}
 				// Четвер
 				if (dayOfWeek === 4) {
+					slots.push({ date: dateStr, time: '13:00' })
 					slots.push({ date: dateStr, time: '16:00' })
 				}
 				// П'ятниця
 				if (dayOfWeek === 5) {
-					slots.push({ date: dateStr, time: '14:00' })
+					// slots.push({ date: dateStr, time: '14:00' })
 				}
 			}
 			
