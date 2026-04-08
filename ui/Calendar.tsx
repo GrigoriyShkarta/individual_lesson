@@ -1,15 +1,26 @@
 'use client'
 
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import Button from '@/ui/Button'
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+import timezone from 'dayjs/plugin/timezone'
+import 'dayjs/locale/uk' 
 
+// Initialize dayjs with plugins
+dayjs.extend(utc)
+dayjs.extend(timezone)
+dayjs.locale('uk')
+
+const KYIV_TZ = 'Europe/Kyiv'
 const calendarUrl = process.env.NEXT_PUBLIC_CALENDAR_URL;
 
 const CalendarSection = () => {
+	const initialTime = dayjs().tz(KYIV_TZ)
 	const [selectedDate, setSelectedDate] = useState<string | null>(null)
 	const [selectedTime, setSelectedTime] = useState<string | null>(null)
-	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth())
-	const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
+	const [currentMonth, setCurrentMonth] = useState(initialTime.month())
+	const [currentYear, setCurrentYear] = useState(initialTime.year())
 	const [availableSlots, setAvailableSlots] = useState<
 		Record<string, string[]>
 	>({})
@@ -21,25 +32,21 @@ const CalendarSection = () => {
 	useEffect(() => {
 		const fetchEvents = async () => {
 			try {
-				const now = new Date()
-				const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
-				const lastDayOfFuture = new Date(
-					now.getFullYear(),
-					now.getMonth() + 6,
-					0
-				)
-        
-        const response = await fetch(
-          `${calendarUrl}?key=AIzaSyAKbkQxAlUHUT3jK2EFFfFzRk4LegDlUHs&` +
-          `timeMin=${encodeURIComponent(firstDayOfMonth.toISOString())}&` +
-          `timeMax=${encodeURIComponent(lastDayOfFuture.toISOString())}&` +
-          `singleEvents=true&orderBy=startTime`
-        );
+				const now = dayjs().tz(KYIV_TZ)
+				const firstDayOfMonth = now.startOf('month')
+				const lastDayOfFuture = now.add(6, 'month').endOf('month')
+				
+				const response = await fetch(
+					`${calendarUrl}?key=AIzaSyAKbkQxAlUHUT3jK2EFFfFzRk4LegDlUHs&` +
+					`timeMin=${encodeURIComponent(firstDayOfMonth.toISOString())}&` +
+					`timeMax=${encodeURIComponent(lastDayOfFuture.toISOString())}&` +
+					`singleEvents=true&orderBy=startTime`
+				);
 
 				const data = await response.json()
 
 				// Получаем все занятые периоды
-				const busyPeriods = data.items
+				const busyPeriods = (data.items || [])
 					.filter(
 						(event: {
 							start?: { dateTime?: string }
@@ -51,8 +58,8 @@ const CalendarSection = () => {
 							start?: { dateTime?: string }
 							end?: { dateTime?: string }
 						}) => ({
-							start: new Date(event.start?.dateTime ?? ''),
-							end: new Date(event.end?.dateTime ?? ''),
+							start: dayjs.tz(event.start?.dateTime, KYIV_TZ),
+							end: dayjs.tz(event.end?.dateTime, KYIV_TZ),
 						})
 					)
 
@@ -64,12 +71,12 @@ const CalendarSection = () => {
 
 				// Фильтруем свободные слоты
 				const freeSlots = allSlots.filter(slot => {
-					const slotStart = new Date(`${slot.date}T${slot.time}:00`)
-					const slotEnd = new Date(slotStart.getTime() + 60 * 60000)
+					const slotStart = dayjs.tz(`${slot.date} ${slot.time}`, KYIV_TZ)
+					const slotEnd = slotStart.add(1, 'hour')
 
 					return !busyPeriods.some(
-						(busy: { start: Date; end: Date }) =>
-							slotStart < busy.end && slotEnd > busy.start
+						(busy: { start: dayjs.Dayjs; end: dayjs.Dayjs }) =>
+							slotStart.isBefore(busy.end) && slotEnd.isAfter(busy.start)
 					)
 				})
 
@@ -93,26 +100,25 @@ const CalendarSection = () => {
 	}, [])
 
 	// Функция генерации только нужных слотов по условиям задачи
-	function generateCustomSlots(startDate: Date, endDate: Date) {
+	function generateCustomSlots(startDate: dayjs.Dayjs, endDate: dayjs.Dayjs) {
 		const slots = []
-		const currentDate = new Date(startDate)
+		let currentDate = startDate.startOf('day')
 		
-		while (currentDate <= endDate) {
-			const year = currentDate.getFullYear()
-			const month = currentDate.getMonth() + 1
-			const day = currentDate.getDate()
-			const dayOfWeek = currentDate.getDay() // 0 - Sunday, 1 - Monday, ...
-			const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`
+		while (currentDate.isBefore(endDate) || currentDate.isSame(endDate, 'day')) {
+			const year = currentDate.year()
+			const month = currentDate.month() + 1
+			const dayOfWeek = currentDate.day() // 0 - Sunday, 1 - Monday, ...
+			const dateStr = currentDate.format('YYYY-MM-DD')
 
 			// === Березень 2026 ===
 			if (year === 2026 && month >= 3) {
 				
 				if (dayOfWeek === 3) {
-					slots.push({ date: dateStr, time: '17:00' })
+					// slots.push({ date: dateStr, time: '17:00' })
 				}
 				// Четвер
 				if (dayOfWeek === 4) {
-					slots.push({ date: dateStr, time: '13:00' })
+					// slots.push({ date: dateStr, time: '13:00' })
 					slots.push({ date: dateStr, time: '16:00' })
 				}
 				// П'ятниця
@@ -121,15 +127,16 @@ const CalendarSection = () => {
 				}
 			}
 			
-			currentDate.setDate(currentDate.getDate() + 1)
+			currentDate = currentDate.add(1, 'day')
 		}
 		
 		return slots
 	}
 	
 	// Генерация дней месяца
-	const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate()
-	const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay()
+	const currentVisibleMonth = dayjs.tz(`${currentYear}-${currentMonth + 1}-01`, KYIV_TZ)
+	const daysInMonth = currentVisibleMonth.daysInMonth()
+	const firstDayOfMonth = currentVisibleMonth.day()
 	const days = Array.from({ length: daysInMonth }, (_, i) => i + 1)
 
 	// Переключение месяцев
@@ -155,35 +162,31 @@ const CalendarSection = () => {
 	const isDateAvailable = (day: number) => {
 		if (blockAllDays) return false
 		
-		const date = new Date(currentYear, currentMonth, day)
-		const today = new Date()
-		today.setHours(0, 0, 0, 0)
+		const dateString = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
+		const date = dayjs.tz(dateString, KYIV_TZ).startOf('day')
+		const today = dayjs().tz(KYIV_TZ).startOf('day')
 		
 		// === Дозволяємо з січня 2026 року ===
-		if (!(date.getFullYear() === 2026 && date.getMonth() >= 0)) {
+		if (!(date.year() === 2026 && date.month() >= 0)) {
 			return false
 		}
 		
-		if (date < today) return false
+		if (date.isBefore(today)) return false
 		
-		const year = date.getFullYear()
-		const month = String(date.getMonth() + 1).padStart(2, '0')
-		const dayFormatted = String(date.getDate()).padStart(2, '0')
-		const dateString = `${year}-${month}-${dayFormatted}`
+		const year = date.year()
+		const month = String(date.month() + 1).padStart(2, '0')
+		const dayFormatted = String(date.date()).padStart(2, '0')
+		const dateStringFromDate = `${year}-${month}-${dayFormatted}`
 		
-		if (blockedDates.includes(dateString)) return false
+		if (blockedDates.includes(dateStringFromDate)) return false
 		
-		return (availableSlots[dateString] || []).length > 0
+		return (availableSlots[dateStringFromDate] || []).length > 0
 	}
 	
 	
 	// Обработчик выбора даты
 	const handleDateSelect = (day: number) => {
-		const date = new Date(currentYear, currentMonth, day)
-		const year = date.getFullYear()
-		const month = String(date.getMonth() + 1).padStart(2, '0')
-		const dayFormatted = String(date.getDate()).padStart(2, '0')
-		const dateString = `${year}-${month}-${dayFormatted}`
+		const dateString = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
 
 		if (availableSlots[dateString]) {
 			setSelectedDate(dateString)
@@ -198,12 +201,7 @@ const CalendarSection = () => {
 
 	// Форматирование даты
 	const formatDate = (dateString: string) => {
-		const options: Intl.DateTimeFormatOptions = {
-			weekday: 'long',
-			day: 'numeric',
-			month: 'long',
-		}
-		return new Date(dateString).toLocaleDateString('uk-UA', options)
+		return dayjs.tz(dateString, KYIV_TZ).format('dddd, D MMMM')
 	}
 
 	return (
@@ -232,10 +230,7 @@ const CalendarSection = () => {
 							</svg>
 						</button>
 						<h4 className='text-lg font-bold text-gray-900'>
-							{new Date(currentYear, currentMonth).toLocaleDateString('uk-UA', {
-								month: 'long',
-								year: 'numeric',
-							})}
+							{dayjs.tz(`${currentYear}-${currentMonth + 1}-01`, KYIV_TZ).format('MMMM YYYY')}
 						</h4>
 						<button
 							onClick={nextMonth}
