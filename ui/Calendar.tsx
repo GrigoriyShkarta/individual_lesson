@@ -120,7 +120,7 @@ const CalendarSection = () => {
 				}
 				// П'ятниця
 				if (dayOfWeek === 5) {
-					// slots.push({ date: dateStr, time: '14:00' })
+					slots.push({ date: dateStr, time: '15:00' })
 				}
 			}
 
@@ -241,7 +241,7 @@ const CalendarSection = () => {
 							className={`p-2 rounded-full transition-colors ${
 								isPrevMonthDisabled 
 									? 'text-gray-300 cursor-not-allowed' 
-									: 'hover:bg-gray-100 text-gray-600'
+									: 'text-gray-600 hover:bg-gray-100'
 							}`}
 						>
 							<svg className='w-5 h-5' fill='currentColor' viewBox='0 0 20 20'>
@@ -261,7 +261,7 @@ const CalendarSection = () => {
 							className={`p-2 rounded-full transition-colors ${
 								isNextMonthDisabled 
 									? 'text-gray-300 cursor-not-allowed' 
-									: 'hover:bg-gray-100 text-gray-600'
+									: 'text-gray-600 hover:bg-gray-100'
 							}`}
 						>
 							<svg className='w-5 h-5' fill='currentColor' viewBox='0 0 20 20'>
