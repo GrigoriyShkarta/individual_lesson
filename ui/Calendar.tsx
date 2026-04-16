@@ -34,7 +34,7 @@ const CalendarSection = () => {
 			try {
 				const now = dayjs().tz(KYIV_TZ)
 				const firstDayOfMonth = now.startOf('month')
-				const lastDayOfFuture = now.add(6, 'month').endOf('month')
+				const lastDayOfFuture = now.add(1, 'month').endOf('month')
 				
 				const response = await fetch(
 					`${calendarUrl}?key=AIzaSyAKbkQxAlUHUT3jK2EFFfFzRk4LegDlUHs&` +
@@ -47,21 +47,19 @@ const CalendarSection = () => {
 
 				// Получаем все занятые периоды
 				const busyPeriods = (data.items || [])
-					.filter(
-						(event: {
-							start?: { dateTime?: string }
-							end?: { dateTime?: string }
-						}) => event.start?.dateTime && event.end?.dateTime
+					.filter((event: any) => 
+						event.status !== 'cancelled' && 
+						event.transparency !== 'transparent' // Ігноруємо події, що позначені як "Вільний"
 					)
-					.map(
-						(event: {
-							start?: { dateTime?: string }
-							end?: { dateTime?: string }
-						}) => ({
-							start: dayjs.tz(event.start?.dateTime, KYIV_TZ),
-							end: dayjs.tz(event.end?.dateTime, KYIV_TZ),
-						})
-					)
+					.map((event: any) => {
+						const startStr = event.start?.dateTime || event.start?.date
+						const endStr = event.end?.dateTime || event.end?.date
+						
+						return {
+							start: dayjs(startStr).tz(KYIV_TZ),
+							end: dayjs(endStr).tz(KYIV_TZ),
+						}
+					})
 
 				// Используем только нужные слоты
 				const allSlots = generateCustomSlots(
@@ -72,7 +70,7 @@ const CalendarSection = () => {
 				// Фильтруем свободные слоты
 				const freeSlots = allSlots.filter(slot => {
 					const slotStart = dayjs.tz(`${slot.date} ${slot.time}`, KYIV_TZ)
-					const slotEnd = slotStart.add(1, 'hour')
+					const slotEnd = slotStart.add(60, 'minute')
 
 					return !busyPeriods.some(
 						(busy: { start: dayjs.Dayjs; end: dayjs.Dayjs }) =>
@@ -111,19 +109,30 @@ const CalendarSection = () => {
 			const dateStr = currentDate.format('YYYY-MM-DD')
 
 			// === Березень 2026 ===
-			if (year === 2026 && month >= 3) {
+			if (year === 2026 && month >= 4) {
 				
 				if (dayOfWeek === 3) {
 					// slots.push({ date: dateStr, time: '17:00' })
 				}
 				// Четвер
 				if (dayOfWeek === 4) {
-					// slots.push({ date: dateStr, time: '13:00' })
-					slots.push({ date: dateStr, time: '16:00' })
+					// slots.push({ date: dateStr, time: '16:00' })
 				}
 				// П'ятниця
 				if (dayOfWeek === 5) {
 					// slots.push({ date: dateStr, time: '14:00' })
+				}
+			}
+
+			if (year === 2026 && month >= 5) {
+				if (dayOfWeek === 2) {
+					slots.push({ date: dateStr, time: '14:00' })
+				}
+				if (dayOfWeek === 3) {
+					slots.push({ date: dateStr, time: '14:00' })
+				}
+				if (dayOfWeek === 4) {
+					slots.push({ date: dateStr, time: '16:00' })
 				}
 			}
 			
@@ -139,8 +148,15 @@ const CalendarSection = () => {
 	const firstDayOfMonth = currentVisibleMonth.day()
 	const days = Array.from({ length: daysInMonth }, (_, i) => i + 1)
 
+	const isPrevMonthDisabled = dayjs.tz(`${currentYear}-${currentMonth + 1}-01`, KYIV_TZ)
+		.isSame(dayjs().tz(KYIV_TZ).startOf('month'), 'month')
+	const isNextMonthDisabled = dayjs.tz(`${currentYear}-${currentMonth + 1}-01`, KYIV_TZ)
+		.isSame(dayjs().tz(KYIV_TZ).add(1, 'month').startOf('month'), 'month')
+
 	// Переключение месяцев
 	const prevMonth = () => {
+		if (isPrevMonthDisabled) return
+
 		if (currentMonth === 0) {
 			setCurrentMonth(11)
 			setCurrentYear(currentYear - 1)
@@ -150,6 +166,8 @@ const CalendarSection = () => {
 	}
 
 	const nextMonth = () => {
+		if (isNextMonthDisabled) return
+
 		if (currentMonth === 11) {
 			setCurrentMonth(0)
 			setCurrentYear(currentYear + 1)
@@ -219,7 +237,12 @@ const CalendarSection = () => {
 					<div className='flex justify-between items-center mb-4'>
 						<button
 							onClick={prevMonth}
-							className='p-2 rounded-full transition-colors hover:bg-gray-100'
+							disabled={isPrevMonthDisabled}
+							className={`p-2 rounded-full transition-colors ${
+								isPrevMonthDisabled 
+									? 'text-gray-300 cursor-not-allowed' 
+									: 'hover:bg-gray-100 text-gray-600'
+							}`}
 						>
 							<svg className='w-5 h-5' fill='currentColor' viewBox='0 0 20 20'>
 								<path
@@ -234,7 +257,12 @@ const CalendarSection = () => {
 						</h4>
 						<button
 							onClick={nextMonth}
-							className='p-2 rounded-full transition-colors hover:bg-gray-100'
+							disabled={isNextMonthDisabled}
+							className={`p-2 rounded-full transition-colors ${
+								isNextMonthDisabled 
+									? 'text-gray-300 cursor-not-allowed' 
+									: 'hover:bg-gray-100 text-gray-600'
+							}`}
 						>
 							<svg className='w-5 h-5' fill='currentColor' viewBox='0 0 20 20'>
 								<path
