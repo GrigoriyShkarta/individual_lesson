@@ -112,7 +112,7 @@ const CalendarSection = () => {
 			if (year === 2026 && month >= 4) {
 				
 				if (dayOfWeek === 3) {
-					// slots.push({ date: dateStr, time: '17:00' })
+					slots.push({ date: dateStr, time: '15:00' })
 				}
 				// Четвер
 				if (dayOfWeek === 4) {
