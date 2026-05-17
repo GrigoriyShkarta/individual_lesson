@@ -78,11 +78,14 @@ const CalendarSection = () => {
 					)
 				})
 
-				// Группируем по датам
+				// Группируем по датам и исключаем дубликаты
 				const slotsByDate = freeSlots.reduce<Record<string, string[]>>(
 					(acc, slot) => {
 						if (!acc[slot.date]) acc[slot.date] = []
-						acc[slot.date].push(slot.time)
+						if (!acc[slot.date].includes(slot.time)) {
+							acc[slot.date].push(slot.time)
+							acc[slot.date].sort() // Сортируем время по возрастанию для красивого отображения
+						}
 						return acc
 					},
 					{}
