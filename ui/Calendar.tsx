@@ -111,32 +111,15 @@ const CalendarSection = () => {
 			const dayOfWeek = currentDate.day() // 0 - Sunday, 1 - Monday, ...
 			const dateStr = currentDate.format('YYYY-MM-DD')
 
-			// === Березень 2026 ===
-			if (year === 2026 && month >= 4) {
-				
-				if (dayOfWeek === 3) {
-					slots.push({ date: dateStr, time: '15:00' })
-				}
-				// Четвер
-				if (dayOfWeek === 4) {
-					slots.push({ date: dateStr, time: '16:00' })
-				}
-				// П'ятниця
-				if (dayOfWeek === 5) {
-					slots.push({ date: dateStr, time: '15:00' })
-				}
+			if (dayOfWeek === 3) {
+				slots.push({ date: dateStr, time: '15:00' })
 			}
-
-			if (year === 2026 && month >= 5) {
-				if (dayOfWeek === 2) {
-					slots.push({ date: dateStr, time: '14:00' })
-				}
-				if (dayOfWeek === 3) {
-					slots.push({ date: dateStr, time: '15:00' })
-				}
-				if (dayOfWeek === 4) {
-					// slots.push({ date: dateStr, time: '16:00' })
-				}
+			if (dayOfWeek === 4) {
+				slots.push({ date: dateStr, time: '16:00' })
+			}
+			if (dayOfWeek === 5) {
+				slots.push({ date: dateStr, time: '15:00' })
+				slots.push({ date: dateStr, time: '16:00' })
 			}
 			
 			currentDate = currentDate.add(1, 'day')
