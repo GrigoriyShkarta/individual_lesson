@@ -121,9 +121,9 @@ const CalendarSection = () => {
 				// slots.push({ date: dateStr, time: '15:00' })
 				slots.push({ date: dateStr, time: '16:00' })
 			}
-			if (dateStr === '2026-06-05') {
-				slots.push({ date: dateStr, time: '13:00' })
-			}
+			// if (dateStr === '2026-06-05') {
+			// 	slots.push({ date: dateStr, time: '13:00' })
+			// }
 
 			currentDate = currentDate.add(1, 'day')
 		}
@@ -228,8 +228,8 @@ const CalendarSection = () => {
 							onClick={prevMonth}
 							disabled={isPrevMonthDisabled}
 							className={`p-2 rounded-full transition-colors ${isPrevMonthDisabled
-									? 'text-gray-300 cursor-not-allowed'
-									: 'text-gray-600 hover:bg-gray-100'
+								? 'text-gray-300 cursor-not-allowed'
+								: 'text-gray-600 hover:bg-gray-100'
 								}`}
 						>
 							<svg className='w-5 h-5' fill='currentColor' viewBox='0 0 20 20'>
@@ -247,8 +247,8 @@ const CalendarSection = () => {
 							onClick={nextMonth}
 							disabled={isNextMonthDisabled}
 							className={`p-2 rounded-full transition-colors ${isNextMonthDisabled
-									? 'text-gray-300 cursor-not-allowed'
-									: 'text-gray-600 hover:bg-gray-100'
+								? 'text-gray-300 cursor-not-allowed'
+								: 'text-gray-600 hover:bg-gray-100'
 								}`}
 						>
 							<svg className='w-5 h-5' fill='currentColor' viewBox='0 0 20 20'>
