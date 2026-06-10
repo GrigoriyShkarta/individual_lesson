@@ -121,9 +121,9 @@ const CalendarSection = () => {
 				// slots.push({ date: dateStr, time: '15:00' })
 				slots.push({ date: dateStr, time: '16:00' })
 			}
-			// if (dateStr === '2026-06-05') {
-			// 	slots.push({ date: dateStr, time: '13:00' })
-			// }
+			if (dateStr === '2026-06-12') {
+				slots.push({ date: dateStr, time: '17:00' })
+			}
 
 			currentDate = currentDate.add(1, 'day')
 		}
