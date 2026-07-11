@@ -110,7 +110,9 @@ const CalendarSection = () => {
 			const month = currentDate.month() + 1
 			const dayOfWeek = currentDate.day() // 0 - Sunday, 1 - Monday, ...
 			const dateStr = currentDate.format('YYYY-MM-DD')
-
+			if (dayOfWeek === 2) {
+				slots.push({ date: dateStr, time: '17:00' })
+			}
 			if (dayOfWeek === 3) {
 				slots.push({ date: dateStr, time: '15:00' })
 			}
