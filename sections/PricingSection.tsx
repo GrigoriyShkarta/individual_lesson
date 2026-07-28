@@ -188,7 +188,7 @@ const PricingSection = () => {
 							</span>
 
 							<h3 className='mb-3 text-2xl font-bold text-gray-900 md:text-3xl'>
-								З 03.07.2026 перебуваю у відпустці ☀️
+								З 03.08.2026 перебуваю у відпустці ☀️
 							</h3>
 
 							<p className='mb-8 max-w-xl text-lg leading-relaxed text-gray-600'>
