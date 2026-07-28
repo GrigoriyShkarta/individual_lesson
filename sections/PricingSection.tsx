@@ -1,7 +1,7 @@
 'use client'
 
 import Button from '@/ui/Button'
-import Calendar from "@/ui/Calendar";
+// import Calendar from "@/ui/Calendar";
 
 const PricingSection = () => {
 	// Выносим тарифы в отдельный массив для удобства
@@ -157,141 +157,71 @@ const PricingSection = () => {
 							</div>
 						</div>
 					</div>
+					{/* Інформаційний блок про відпустку та запис через Telegram */}
+					<div
+						id='buy'
+						className='overflow-hidden relative p-8 mx-auto my-8 max-w-3xl text-center bg-gradient-to-br from-blue-50 via-white to-indigo-50 rounded-2xl border shadow-xl md:p-10 border-blue-100/80'
+					>
+						{/* Декоративне сяйво на фоні */}
+						<div className='absolute -top-12 -right-12 w-48 h-48 rounded-full blur-2xl pointer-events-none bg-blue-200/40' />
+						<div className='absolute -bottom-12 -left-12 w-48 h-48 rounded-full blur-2xl pointer-events-none bg-indigo-200/40' />
 
-					{/* Календарь */}
-					<div className='overflow-hidden p-6 bg-white rounded-xl shadow-lg'>
-						<h3 className='mb-6 text-2xl font-bold text-center text-gray-900'>
-							Доступні дати для запису
-						</h3>
-						<div className='flex justify-center'>
-							<Calendar />
+						<div className='flex relative z-10 flex-col items-center'>
+							<div className='inline-flex items-center justify-center p-3.5 mb-5 text-blue-600 rounded-full bg-blue-100/80 shadow-inner'>
+								<svg
+									className='w-8 h-8'
+									fill='none'
+									stroke='currentColor'
+									viewBox='0 0 24 24'
+								>
+									<path
+										strokeLinecap='round'
+										strokeLinejoin='round'
+										strokeWidth='2'
+										d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'
+									/>
+								</svg>
+							</div>
+
+							<span className='inline-block px-3 py-1 mb-3 text-xs font-semibold tracking-wide text-blue-700 uppercase bg-blue-100 rounded-full'>
+								Інформація про запис
+							</span>
+
+							<h3 className='mb-3 text-2xl font-bold text-gray-900 md:text-3xl'>
+								З 03.07.2026 перебуваю у відпустці ☀️
+							</h3>
+
+							<p className='mb-8 max-w-xl text-lg leading-relaxed text-gray-600'>
+								Для запису в лист очікування на індивідуальні уроки пишіть у Telegram.
+							</p>
+
+							<a
+								href='https://t.me/yana_vocalcoach'
+								target='_blank'
+								rel='noopener noreferrer'
+								className='inline-flex items-center justify-center gap-3 px-8 py-4 text-lg font-medium text-white transition-all duration-300 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl shadow-lg hover:shadow-xl hover:from-blue-600 hover:to-indigo-700 transform hover:-translate-y-0.5 group'
+							>
+								<svg className='w-6 h-6 fill-current' viewBox='0 0 24 24'>
+									<path d='M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18.717-.962 4.084-1.362 5.761-.17.712-.433.951-.687.974-.555.051-.977-.367-1.514-.719-.84-.551-1.314-.894-2.128-1.43-.941-.62-.331-.961.205-1.519.14-.146 2.576-2.361 2.624-2.565.006-.026.011-.123-.047-.175s-.144-.034-.206-.02c-.088.02-1.488.946-4.201 2.777-.397.272-.757.406-1.079.399-.356-.008-1.04-.202-1.549-.367-.625-.203-1.123-.311-1.079-.656.023-.179.274-.363.753-.552 2.951-1.285 4.92-2.133 5.908-2.544 2.822-1.173 3.408-1.377 3.791-1.384.084 0 .272.021.394.12.103.084.132.198.146.279.014.081.026.264.013.411z' />
+								</svg>
+								<span>Написати в Telegram</span>
+								<svg
+									className='w-5 h-5 transition-transform group-hover:translate-x-1'
+									fill='none'
+									stroke='currentColor'
+									viewBox='0 0 24 24'
+								>
+									<path
+										strokeLinecap='round'
+										strokeLinejoin='round'
+										strokeWidth='2'
+										d='M14 5l7 7m0 0l-7 7m7-7H3'
+									/>
+								</svg>
+							</a>
 						</div>
 					</div>
-          
-          <div
-            id={'buy'}
-            className='overflow-hidden relative bg-gradient-to-br from-blue-50 via-white to-blue-50 rounded-2xl shadow-xl'
-          >
-            {/* Декоровані кола на фоні */}
-            {/*<div className='absolute -top-16 -right-16 w-56 h-56 rounded-full blur-3xl pointer-events-none bg-blue-200/30' />*/}
-            {/*<div className='absolute -bottom-16 -left-16 w-56 h-56 rounded-full blur-3xl pointer-events-none bg-indigo-200/30' />*/}
-            
-            {/*<div className='relative p-6 sm:p-8'>*/}
-            {/*  <div className='flex gap-2 justify-center items-center mb-5'>*/}
-      {/*<span className='inline-flex gap-2 items-center px-3 py-1 text-xs font-semibold text-blue-700 rounded-full ring-1 ring-inset bg-blue-600/10 ring-blue-600/20'>*/}
-      {/*  <svg width='16' height='16' viewBox='0 0 24 24' fill='none' className='text-blue-600'>*/}
-      {/*    <path d='M12 3v18m9-9H3' stroke='currentColor' strokeWidth='2' strokeLinecap='round'/>*/}
-      {/*  </svg>*/}
-      {/*  Набір обмежений*/}
-      {/*</span>*/}
-      {/*        </div>*/}
-              
-              <div className='flex flex-col gap-2 md:flex-row'>
-              
-              {/* Колонка — Очікування індивідуальних */}
-              {/*  <div className='flex flex-col justify-between p-5 rounded-xl border border-gray-200 shadow-sm backdrop-blur-sm transition-shadow bg-white/80 sm:p-6 hover:shadow-md'>*/}
-              {/*    <div className='flex gap-3 items-start'>*/}
-              {/*      <div className='mt-1 text-blue-600 shrink-0'>*/}
-              {/*        <svg width='24' height='24' viewBox='0 0 24 24' fill='none'>*/}
-              {/*          <path d='M12 2a10 10 0 100 20 10 10 0 000-20Zm0 6v5l3 1' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'/>*/}
-              {/*        </svg>*/}
-              {/*      </div>*/}
-              {/*      <div>*/}
-              {/*        <h4 className='text-lg font-bold text-gray-900'>*/}
-              {/*          Індивідуальні уроки*/}
-              {/*        </h4>*/}
-              {/*        <p className='mt-2 text-gray-700'>*/}
-              {/*          Наявність вільних місць і зручних віконець узгоджуйте індивідуально.                      </p>*/}
-              {/*      </div>*/}
-              {/*    </div>*/}
-              {/*    */}
-              {/*    <div className='flex justify-center mt-4'>*/}
-              {/*      <a href='https://t.me/yana_vocalcoach' className='w-full sm:w-auto'>*/}
-              {/*        <Button*/}
-              {/*          variant='primary'*/}
-              {/*          as='button'*/}
-              {/*          size='sm'*/}
-              {/*          className='w-full sm:w-auto group'*/}
-              {/*          onClick={() => {*/}
-              {/*            const pricingSection = document.getElementById('pricing')*/}
-              {/*            if (pricingSection) {*/}
-              {/*              pricingSection.scrollIntoView({ behavior: 'smooth' })*/}
-              {/*            }*/}
-              {/*          }}*/}
-              {/*        >*/}
-              {/*          <span className='inline-flex gap-2 items-center'>*/}
-              {/*            Написати*/}
-              {/*            <svg*/}
-              {/*              className='w-4 h-4 transition-transform group-hover:translate-x-0.5'*/}
-              {/*              viewBox='0 0 24 24'*/}
-              {/*              fill='none'*/}
-              {/*            >*/}
-              {/*              <path d='M5 12h14M13 5l7 7-7 7' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'/>*/}
-              {/*            </svg>*/}
-              {/*          </span>*/}
-              {/*        </Button>*/}
-              {/*      </a>*/}
-              {/*    </div>*/}
-              {/*  </div>*/}
-                
-                {/* Вертикальний поділ на md */}
-                {/*<div className='hidden mx-auto w-px h-full bg-gradient-to-b from-transparent via-gray-200 to-transparent md:block' aria-hidden='true' />*/}
-                
-                {/* Колонка — Мінігрупа */}
-                {/*<div className='flex flex-col justify-between p-5 rounded-xl border border-gray-200 shadow-sm backdrop-blur-sm transition-shadow bg-white/80 sm:p-6 hover:shadow-md'>*/}
-                {/*  <div className='flex gap-3 items-start'>*/}
-                {/*    <div className='mt-1 text-indigo-600 shrink-0'>*/}
-                {/*      <svg width='24' height='24' viewBox='0 0 24 24' fill='none'>*/}
-                {/*        <path d='M8 17a4 4 0 118 0v1H8v-1Z' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'/>*/}
-                {/*        <circle cx='12' cy='8' r='3' stroke='currentColor' strokeWidth='2'/>*/}
-                {/*      </svg>*/}
-                {/*    </div>*/}
-                {/*    <div>*/}
-                {/*      <div className='flex gap-2 items-center'>*/}
-                {/*        <h4 className='text-lg font-bold text-gray-900'>*/}
-                {/*          Мінігрупа: екстремальні техніки з нуля*/}
-                {/*        </h4>*/}
-                {/*        */}
-                {/*      </div>*/}
-                {/*      <p className='mt-2 text-gray-700'>*/}
-                {/*        А поки триває набір у мінігрупу на курс з екстремальних технік вокалу з нуля. Почніть навчання вже зараз!                      </p>*/}
-                {/*    </div>*/}
-                {/*  </div>*/}
-                  
-                  {/*<div className='flex justify-center mt-4'>*/}
-                  {/*  <a href='https://extreme-group-sable.vercel.app/' className='w-full sm:w-auto'>*/}
-                  {/*    <Button*/}
-                  {/*      variant='outline'*/}
-                  {/*      as='button'*/}
-                  {/*      size='sm'*/}
-                  {/*      className='w-full sm:w-auto group'*/}
-                  {/*      onClick={() => {*/}
-                  {/*        const pricingSection = document.getElementById('pricing')*/}
-                  {/*        if (pricingSection) {*/}
-                  {/*          pricingSection.scrollIntoView({ behavior: 'smooth' })*/}
-                  {/*        }*/}
-                  {/*      }}*/}
-                  {/*    >*/}
-                  {/*      <span className='inline-flex gap-2 items-center'>*/}
-                  {/*        На курс*/}
-                  {/*        <svg*/}
-                  {/*          className='w-4 h-4 transition-transform group-hover:translate-x-0.5'*/}
-                  {/*          viewBox='0 0 24 24'*/}
-                  {/*          fill='none'*/}
-                  {/*        >*/}
-                  {/*          <path d='M5 12h14M13 5l7 7-7 7' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'/>*/}
-                  {/*        </svg>*/}
-                  {/*      </span>*/}
-                  {/*    </Button>*/}
-                  {/*  </a>*/}
-                  {/*</div>*/}
-                {/*</div>*/}
-              </div>
-              
-            {/*</div>*/}
-          </div>
-        
-        </div>
+				</div>
 			</div>
 		</section>
 	)
