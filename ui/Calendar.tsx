@@ -111,10 +111,10 @@ const CalendarSection = () => {
 			const dayOfWeek = currentDate.day() // 0 - Sunday, 1 - Monday, ...
 			const dateStr = currentDate.format('YYYY-MM-DD')
 			if (dayOfWeek === 2) {
-				slots.push({ date: dateStr, time: '17:00' })
+				// slots.push({ date: dateStr, time: '17:00' })
 			}
 			if (dayOfWeek === 3) {
-				slots.push({ date: dateStr, time: '15:00' })
+				// slots.push({ date: dateStr, time: '15:00' })
 			}
 			if (dayOfWeek === 4) {
 				slots.push({ date: dateStr, time: '16:00' })
@@ -123,9 +123,9 @@ const CalendarSection = () => {
 				// slots.push({ date: dateStr, time: '15:00' })
 				slots.push({ date: dateStr, time: '16:00' })
 			}
-			if (dateStr === '2026-06-12') {
-				slots.push({ date: dateStr, time: '17:00' })
-			}
+			// if (dateStr === '2026-06-12') {
+			// 	slots.push({ date: dateStr, time: '17:00' })
+			// }
 
 			currentDate = currentDate.add(1, 'day')
 		}
