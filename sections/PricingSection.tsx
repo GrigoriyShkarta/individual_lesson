@@ -51,7 +51,7 @@ const PricingSection = () => {
 					<div className='overflow-hidden mb-12 bg-white rounded-xl shadow-lg'>
 						<div className='p-8'>
 							<h3 className='mb-4 text-2xl font-bold text-blue-600'>
-								Пробний урок
+								Діагностичний урок
 							</h3>
 							<p className='mb-6 text-gray-700'>
 								Ознайомчий урок тривалістю 45 хвилин, де ми познайомимось, я
